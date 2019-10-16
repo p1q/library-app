@@ -64,12 +64,4 @@ public class Book {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-    public Integer getReleaseYear() {
-        return year;
-    }
-
-    public void setReleaseYear(Integer releaseYear) {
-        this.year = releaseYear;
-    }
 }
