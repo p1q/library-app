@@ -27,10 +27,10 @@ public class Book {
     public Book() {
     }
 
-    public Book(String name, Double totalPages, Integer releaseYear) {
+    public Book(String name, Integer year, Double price) {
         this.name = name;
-        this.price = totalPages;
-        this.year = releaseYear;
+        this.year = year;
+        this.price = price;
     }
 
     public Long getBookId() {
