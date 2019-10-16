@@ -8,26 +8,26 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "BOOKS")
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BOOK_ID")
+    @Column(name = "book_id")
     private Long bookId;
 
-    @Column(name = "NAME")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "YEAR")
+    @Column(name = "year")
     private Integer year;
 
-    @Column(name = "Price")
-    private Integer price;
+    @Column(name = "price")
+    private Double price;
 
     public Book() {
     }
 
-    public Book(String name, Integer totalPages, Integer releaseYear) {
+    public Book(String name, Double totalPages, Integer releaseYear) {
         this.name = name;
         this.price = totalPages;
         this.year = releaseYear;
@@ -57,11 +57,11 @@ public class Book {
         this.year = year;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
