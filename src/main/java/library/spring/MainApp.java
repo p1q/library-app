@@ -33,17 +33,17 @@ public class MainApp {
         }
 
         // Add Books
-        bookService.add(new Book("Effective Java", 987, 2017));
-        bookService.add(new Book("Java Concurrency in Practice", 784, 2015));
-        bookService.add(new Book("Head First Design Patterns", 624, 2014));
-        bookService.add(new Book("Java: A Beginner’s Guide", 1241, 2018));
+        bookService.add(new Book("Effective Java", 2017, 547.1));
+        bookService.add(new Book("Java Concurrency in Practice", 2015, 457.2));
+        bookService.add(new Book("Head First Design Patterns", 2014, 614.5));
+        bookService.add(new Book("Java: A Beginner’s Guide", 2018, 389.7));
 
         // Get Books
         List<Book> books = bookService.listBooks();
         for (Book book : books) {
             System.out.println("Book ID: " + book.getBookId());
             System.out.println("Name: " + book.getName());
-            System.out.println("Release Year: " + book.getReleaseYear());
+            System.out.println("Release Year: " + book.getYear());
             System.out.println("Price: " + book.getPrice());
             System.out.println();
         }
