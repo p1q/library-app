@@ -4,7 +4,7 @@ import java.util.List;
 import library.spring.entity.User;
 
 public interface UserService {
-    void add(User user);
+    void addUser(User user);
 
-    List<User> listUsers();
+    List<User> getAllUsers();
 }

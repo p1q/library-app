@@ -5,11 +5,13 @@ import library.spring.entity.Author;
 import library.spring.entity.Book;
 
 public interface BookDao {
-    List<Book> listBooks();
+    void addBook(Book book);
 
-    void add(Book book);
+    Book getBook(Long bookId);
 
-    List< Book> findByName(String name);
+    List<Book> getAllBooks();
 
-    List< Book> findByAuthor(Author author);
+    List<Book> getAllBooksByAuthor(Author author);
+
+    List<Book> findByTitle(String title);
 }

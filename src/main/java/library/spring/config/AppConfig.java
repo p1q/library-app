@@ -1,8 +1,10 @@
 package library.spring.config;
 
-import javax.sql.DataSource;
 import java.util.Properties;
+import javax.sql.DataSource;
+import library.spring.entity.Author;
 import library.spring.entity.Book;
+import library.spring.entity.Rent;
 import library.spring.entity.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("library.spring.dao"),
-        @ComponentScan("library.spring.service")
-})
+        @ComponentScan("library.spring.service")})
 public class AppConfig {
     @Autowired
     private Environment env;
@@ -47,7 +48,7 @@ public class AppConfig {
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class, Book.class);
+        factoryBean.setAnnotatedClasses(User.class, Book.class, Author.class, Rent.class);
         return factoryBean;
     }
 
