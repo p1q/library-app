@@ -14,14 +14,14 @@ public class UserDaoImpl implements UserDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void add(User user) {
+    public void addUser(User user) {
         sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
-    public List<User> listUsers() {
-        @SuppressWarnings("unchecked")
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+    public List<User> getAllUsers() {
+        TypedQuery<User> query = sessionFactory.getCurrentSession()
+                .createQuery("FROM User", User.class);
         return query.getResultList();
     }
 }

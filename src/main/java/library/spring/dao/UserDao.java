@@ -1,10 +1,10 @@
 package library.spring.dao;
 
-import library.spring.entity.User;
 import java.util.List;
+import library.spring.entity.User;
 
 public interface UserDao {
-    List<User> listUsers();
+    void addUser(User user);
 
-    void add(User user);
+    List<User> getAllUsers();
 }

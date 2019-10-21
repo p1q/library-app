@@ -1,27 +1,27 @@
 package library.spring.service.impl;
 
 import java.util.List;
-import library.spring.dao.BookDao;
-import library.spring.entity.Book;
-import library.spring.service.BookService;
+import library.spring.dao.UserDao;
+import library.spring.entity.User;
+import library.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class BookServiceImp implements BookService {
+public class UserServiceImpl implements UserService {
     @Autowired
-    private BookDao bookDao;
+    private UserDao userDao;
 
     @Transactional
     @Override
-    public void add(Book book) {
-        bookDao.add(book);
+    public void addUser(User user) {
+        userDao.addUser(user);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Book> listBooks() {
-        return bookDao.listBooks();
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 }
