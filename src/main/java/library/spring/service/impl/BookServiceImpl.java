@@ -1,6 +1,8 @@
 package library.spring.service.impl;
 
 import java.util.List;
+import java.util.Optional;
+
 import library.spring.dao.BookDao;
 import library.spring.entity.Author;
 import library.spring.entity.Book;
@@ -22,7 +24,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public Book getBook(Long bookId) {
+    public Optional<Book> getBook(Long bookId) {
         return bookDao.getBook(bookId);
     }
 

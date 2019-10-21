@@ -24,7 +24,7 @@ public class RentDaoImpl implements RentDao {
     @Override
     public Rent getRent(User user, Book book) {
         TypedQuery<Rent> query = sessionFactory.getCurrentSession()
-                .createQuery("FROM Rent WHERE user LIKE :user AND book LIKE :book", Rent.class);
+                .createQuery("FROM Rent WHERE user = :user AND book = :book", Rent.class);
         query.setParameter("user", user);
         query.setParameter("book", book);
         return query.getSingleResult();
@@ -47,7 +47,7 @@ public class RentDaoImpl implements RentDao {
     @Override
     public List<Book> getBooksRentByUser(User user) {
         TypedQuery<Rent> query = sessionFactory.getCurrentSession()
-                .createQuery("FROM Rent WHERE user LIKE :user AND active = :active", Rent.class);
+                .createQuery("FROM Rent WHERE user = :user AND active = :active", Rent.class);
         query.setParameter("user", user);
         query.setParameter("active", true);
         return query.getResultList().stream().map(Rent::getBook).collect(Collectors.toList());
@@ -56,7 +56,7 @@ public class RentDaoImpl implements RentDao {
     @Override
     public Boolean isBookAvailable(Book book) {
         TypedQuery<Rent> query = sessionFactory.getCurrentSession()
-                .createQuery("FROM Rent WHERE book LIKE :book", Rent.class);
+                .createQuery("FROM Rent WHERE book = :book", Rent.class);
         query.setParameter("book", book);
         return query.getSingleResult().getActive();
     }

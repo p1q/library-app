@@ -1,6 +1,7 @@
 package library.spring.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.TypedQuery;
 import library.spring.dao.BookDao;
@@ -21,11 +22,11 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Book getBook(Long bookId) {
+    public Optional<Book> getBook(Long bookId) {
         TypedQuery<Book> query = sessionFactory.getCurrentSession()
-                .createQuery("FROM Book AS b WHERE b.bookId = :bookId", Book.class);
+                .createQuery("FROM Book WHERE bookId = :bookId", Book.class);
         query.setParameter("bookId", bookId);
-        return query.getSingleResult();
+        return Optional.of(query.getSingleResult());
     }
 
     @Override
@@ -38,10 +39,15 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> getAllBooksByAuthor(Author author) {
         TypedQuery query = sessionFactory.getCurrentSession().createQuery(
-                "SELECT b.bookId FROM Book AS b INNER JOIN b.authors AS a WHERE a.authorId = :authorId");
+                "SELECT b.bookId FROM Book AS b "
+                        + "INNER JOIN b.authors AS a WHERE a.authorId = :authorId");
         query.setParameter("authorId", author.getAuthorId());
         List<Long> idList = query.getResultList();
-        return idList.stream().map(this::getBook).collect(Collectors.toList());
+        return idList.stream()
+                .map(this::getBook)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     @Override
