@@ -40,7 +40,7 @@ public class Rent {
         this.user = user;
         this.book = book;
         this.rentDate = LocalDate.now();
-        this.active = true;
+        this.active = true;//rentDate.getYear()
     }
 
     public Long getRentId() {

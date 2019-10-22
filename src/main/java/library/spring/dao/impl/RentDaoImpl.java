@@ -2,6 +2,7 @@ package library.spring.dao.impl;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import library.spring.dao.RentDao;
 import library.spring.entity.Book;
@@ -31,6 +32,15 @@ public class RentDaoImpl implements RentDao {
     }
 
     @Override
+    public List<Rent> getUserActiveRents(User user) {
+        TypedQuery<Rent> query = sessionFactory.getCurrentSession()
+                .createQuery("FROM Rent WHERE user = :user AND active = :active", Rent.class);
+        query.setParameter("user", user);
+        query.setParameter("active", true);
+        return query.getResultList();
+    }
+
+    @Override
     public List<Rent> getAllRents() {
         TypedQuery<Rent> query = sessionFactory.getCurrentSession()
                 .createQuery("FROM Rent", Rent.class);
@@ -38,19 +48,19 @@ public class RentDaoImpl implements RentDao {
     }
 
     @Override
-    public void returnBook(User user, Book book) {
-        Rent rent = getRent(user, book);
-        rent.setActive(false);
-        sessionFactory.getCurrentSession().update(rent);
+    public void returnBook(Long bookId) {
+        Query query = sessionFactory.getCurrentSession()
+                .createQuery("UPDATE Rent SET active = :active WHERE book_id = :bookId");
+        query.setParameter("active", false);
+        query.setParameter("bookId", bookId);
+        query.executeUpdate();
     }
 
     @Override
     public List<Book> getBooksRentByUser(User user) {
-        TypedQuery<Rent> query = sessionFactory.getCurrentSession()
-                .createQuery("FROM Rent WHERE user = :user AND active = :active", Rent.class);
-        query.setParameter("user", user);
-        query.setParameter("active", true);
-        return query.getResultList().stream().map(Rent::getBook).collect(Collectors.toList());
+        return getUserActiveRents(user).stream()
+                .map(Rent::getBook)
+                .collect(Collectors.toList());
     }
 
     @Override

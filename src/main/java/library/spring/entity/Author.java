@@ -55,7 +55,6 @@ public class Author {
 
     @Override
     public String toString() {
-        return String.format("Author{authorId=%d, name='%s', surname='%s'}",
-                authorId, name, surname);
+        return String.format("ID:%d, %s %s", authorId, name, surname);
     }
 }

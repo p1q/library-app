@@ -88,4 +88,9 @@ public class Book {
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %d, %s, %d, %s,  Authors: %s", bookId, title, year, price, authors);
+    }
 }

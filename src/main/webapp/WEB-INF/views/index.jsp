@@ -19,17 +19,57 @@
   </tr>
   <tr>
     <td style="text-align: center;" colspan="2">
-      <!-- Add registration button -->
-      <form action = register method = "GET">
-        <input type = "submit" value = "Register"/>
+      <!-- Add book button -->
+      <form action = /book/add method = "GET">
+        <input type = "submit" value = "Add book"/>
       </form>
     </td>
   </tr>
   <tr style="height: 18px;">
     <td style="text-align: center;" colspan="2">
-      <!-- Show all items button -->
+      <!-- Find book by title button -->
+      <form action = /book/search method = "GET">
+        <input type = "submit" value = "Find book by title"/>
+      </form>
+    </td>
+  </tr>
+  <tr style="height: 18px;">
+    <td style="text-align: center;" colspan="2">
+      <!-- Find book by author button -->
+      <form action = /book/search-author method = "GET">
+        <input type = "submit" value = "Find book by author"/>
+      </form>
+    </td>
+  </tr>
+  <tr style="height: 18px;">
+    <td style="text-align: center;" colspan="2">
+      <!-- Show all books button -->
       <form action = /book/all method = "GET">
         <input type = "submit" value = "Show all books"/>
+      </form>
+    </td>
+  </tr>
+  <tr style="height: 18px;">
+    <td style="text-align: center;" colspan="2">
+      <!-- Show all rents button -->
+      <form action = /rent/all-rents method = "GET">
+        <input type = "submit" value = "Show all rents"/>
+      </form>
+    </td>
+  </tr>
+  <tr style="height: 18px;">
+    <td style="text-align: center;" colspan="2">
+      <!-- Show user rents button -->
+      <form action = /rent/user-rents method = "GET">
+        <input type = "submit" value = "Show user's rents"/>
+      </form>
+    </td>
+  </tr>
+  <tr style="height: 18px;">
+    <td style="text-align: center;" colspan="2">
+      <!-- Show all books rented by user button -->
+      <form action = /rent/rented-users-books method = "GET">
+        <input type = "submit" value = "Show user's rented books"/>
       </form>
     </td>
   </tr>
@@ -46,6 +86,14 @@
       <!-- Logout button -->
       <form action = logout method = "GET">
         <input type = "submit" value = "Logout"/>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center;" colspan="2">
+      <!-- Inject Demo Data -->
+      <form action = /inject/data method = "GET">
+        <input type = "submit" value = "Inject Data"/>
       </form>
     </td>
   </tr>

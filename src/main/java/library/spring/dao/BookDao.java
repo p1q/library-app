@@ -15,4 +15,6 @@ public interface BookDao {
     List<Book> getAllBooksByAuthor(Author author);
 
     List<Book> findByTitle(String title);
+
+    List<Book> findByAuthor(List<Author> authors);
 }
