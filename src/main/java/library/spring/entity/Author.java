@@ -52,4 +52,10 @@ public class Author {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Author{authorId=%d, name='%s', surname='%s'}",
+                authorId, name, surname);
+    }
 }
