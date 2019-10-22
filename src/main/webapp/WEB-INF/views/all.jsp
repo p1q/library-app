@@ -37,11 +37,11 @@
                 <c:out value="${book.price}" />
             </td>
             <td style="text-align: center;">
-                <a href="/show-book-info?bookId=${book.bookId}">
+                <a href="/book/info?bookId=${book.bookId}">
                     <span style="color: #0000ff;"><strong>INFO</strong></span></a>
             </td>
             <td style="text-align: center;">
-                <a href="/rent-book?bookId=${book.bookId}">
+                <a href="/book/rent?bookId=${book.bookId}">
                     <span style="color: #0000ff;"><strong>RENT</strong></span></a>
             </td>
         </tr>

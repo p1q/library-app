@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/book")
 public class BookController {
     private static final Logger LOGGER = Logger.getLogger(BookController.class);
 
@@ -23,19 +23,19 @@ public class BookController {
     @Autowired
     private RentService rentService;
 
-    @GetMapping("/show-all-books")
+    @GetMapping("/all")
     public String getAllBooks(ModelMap model) {
         model.put("books", bookService.getAllBooks());
-        return "show-all-books";
+        return "all";
     }
 
-    @GetMapping("/show-book-info")
+    @GetMapping("/info")
     public String bookInfo(@RequestParam("bookId") Long bookId, Model model) {
         try {
             Optional<Book> book = bookService.getBook(bookId);
             model.addAttribute("book", book.get());
             model.addAttribute("active", rentService.isBookAvailable(book.get()) ? "YES" : "NO");
-            return "show-book-info";
+            return "info";
         } catch (Exception e) {
             LOGGER.error("Book not found. " + e);
             return "error-book-not-found";
