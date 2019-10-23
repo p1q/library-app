@@ -5,6 +5,8 @@
     <title>Add Book</title>
 </head>
 <body>
+<div>${errorMsg}</div>
+
 <h3>ADD BOOK:</h3>
 
 <form action="/book/add" method="POST">
@@ -27,19 +29,11 @@
         </tr>
         <tr>
             <td>Author's name*</td>
-            <td><input value="${name1}" name="name1"/></td>
+            <td><input value="${name1}" name="name"/></td>
         </tr>
         <tr>
             <td>Author's surname*</td>
-            <td><input value="${surname1}" name="surname1"/></td>
-        </tr>
-        <tr>
-            <td>Author's name</td>
-            <td><input value="${name2}" name="name2"/></td>
-        </tr>
-        <tr>
-            <td>Author's surname</td>
-            <td><input value="${surname2}" name="surname2"/></td>
+            <td><input value="${surname1}" name="surname"/></td>
         </tr>
         <tr>
             <td></td>

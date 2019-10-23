@@ -52,16 +52,13 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     @Override
     public List<Book> findByAuthor(String searchString) {
-        List<Author> allAuthors = authorService.getAllAuthors();
         List<Author> foundAuthors = new ArrayList<>();
-        allAuthors.forEach(a -> {
-            String name = a.getName();
-            String surname = a.getSurname();
-            String author = String.format("%s %s %s %s", name, surname, surname, name);
-            if (author.contains(searchString)) {
+        for (Author a : authorService.getAllAuthors()) {
+            String fullName = String.format("%s %s %s", a.getName(), a.getSurname(), a.getName());
+            if (fullName.contains(searchString)) {
                 foundAuthors.add(a);
             }
-        });
+        }
         return bookDao.findByAuthor(foundAuthors);
     }
 }

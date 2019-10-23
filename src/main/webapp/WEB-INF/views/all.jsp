@@ -6,6 +6,8 @@
     <title>Show All Books</title>
 </head>
 <body>
+
+<div><span style="color: #ff0000;"><strong>${errorMsg}</strong></span></div>
 <h3>ALL BOOKS LIST:</h3>
 
 <table border="3">
@@ -37,7 +39,7 @@
                 <c:out value="${book.price}" />
             </td>
             <td style="text-align: center;">
-                <a href="/book/info?bookId=${book.bookId}">
+                <a href="/book/${book.bookId}">
                     <span style="color: #0000ff;"><strong>INFO</strong></span></a>
             </td>
             <td style="text-align: center;">

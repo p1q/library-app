@@ -5,6 +5,7 @@
 </head>
 <body>
 
+<p><span style="color: #0000ff;"><strong>${message}</strong></span></p>
 <table border="5" >
   <tbody>
   <tr>

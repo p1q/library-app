@@ -16,10 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/book")
@@ -39,16 +39,17 @@ public class BookController {
         return "all";
     }
 
-    @GetMapping("/info")
-    public String bookInfo(@RequestParam("bookId") Long bookId, Model model) {
+    @GetMapping("/{bookId}")
+    public String bookInfo(@PathVariable("bookId") Long bookId, ModelMap model) {
         try {
             Optional<Book> book = bookService.getBook(bookId);
             model.addAttribute("book", book.get());
             model.addAttribute("active", rentService.isBookAvailable(book.get()) ? "YES" : "NO");
             return "info";
         } catch (Exception e) {
+            model.addAttribute("errorMsg", "Book not found!");
             LOGGER.error("Book not found. " + e);
-            return "error-book-not-found";
+            return "forward:/book/all";
         }
     }
 
@@ -84,29 +85,25 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public RedirectView addBook(@ModelAttribute Book book, Model model,
-            @RequestParam("name1") String name1, @RequestParam("surname1") String surname1,
-            @RequestParam("name2") String name2, @RequestParam("surname2") String surname2) {
+    public String addBook(@ModelAttribute Book book, Model model,
+            @RequestParam("name") String name, @RequestParam("surname") String surname) {
         if (book.getTitle().isEmpty() || book.getYear() == null || book.getPrice() == null
-                || name1.isEmpty() || surname1.isEmpty()) {
+                || name.isEmpty() || surname.isEmpty()) {
             try {
                 throw new RequiredFieldsNotFilled("Not all required fields are filled.");
             } catch (RequiredFieldsNotFilled e) {
                 LOGGER.error("Not all required fields are filled.");
-                return new RedirectView("add");
+                model.addAttribute("errorMsg", "Not all required fields are filled.");
+                return "redirect:/book/add";
             }
         }
         List<Author> authors = new ArrayList<>();
-        Author author1 = new Author(name1, surname1);
-        authorService.addAuthor(author1);
-        authors.add(author1);
-        if (!(name2.isEmpty() || surname2.isEmpty())) {
-            Author author2 = new Author(name2, surname2);
-            authorService.addAuthor(author2);
-            authors.add(author2);
-        }
+        Author author = new Author(name, surname);
+        authorService.addAuthor(author);
+        authors.add(author);
         book.setAuthors(authors);
+
         bookService.addBook(book);
-        return new RedirectView("all");
+        return "redirect:/book/all";
     }
 }

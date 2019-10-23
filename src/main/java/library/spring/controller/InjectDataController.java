@@ -12,16 +12,16 @@ import library.spring.service.RentService;
 import library.spring.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/inject")
 public class InjectDataController {
 
     @GetMapping("/data")
-    public static RedirectView injectDemoData() {
+    public static String injectDemoData(Model model) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
@@ -89,6 +89,7 @@ public class InjectDataController {
         rentService.returnBook(book3.getBookId());
         rentService.returnBook(book4.getBookId());
 
-        return new RedirectView("/");
+        model.addAttribute("message", "Demo data injected successfully!");
+        return "forward:/";
     }
 }
