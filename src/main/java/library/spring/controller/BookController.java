@@ -1,11 +1,9 @@
 package library.spring.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import library.spring.entity.Author;
 import library.spring.entity.Book;
-import library.spring.exceptions.RequiredFieldsNotFilled;
 import library.spring.service.AuthorService;
 import library.spring.service.BookService;
 import library.spring.service.RentService;
@@ -74,7 +72,7 @@ public class BookController {
     @PostMapping("/found-author")
     public String foundByAuthor(@RequestParam(value = "searchString") String searchString,
                                 Model model) {
-        List<Book> foundBooks = bookService.findByAuthor(searchString);
+        List<Book> foundBooks = bookService.findByAuthorSurname(searchString);
         model.addAttribute("foundBooks", foundBooks);
         return "found-books";
     }
@@ -89,20 +87,12 @@ public class BookController {
             @RequestParam("name") String name, @RequestParam("surname") String surname) {
         if (book.getTitle().isEmpty() || book.getYear() == null || book.getPrice() == null
                 || name.isEmpty() || surname.isEmpty()) {
-            try {
-                throw new RequiredFieldsNotFilled("Not all required fields are filled.");
-            } catch (RequiredFieldsNotFilled e) {
-                LOGGER.error("Not all required fields are filled.");
-                model.addAttribute("errorMsg", "Not all required fields are filled.");
-                return "redirect:/book/add";
-            }
+            model.addAttribute("errorMsg", "Not all required fields are filled.");
+            return "redirect:/book/add";
         }
-        List<Author> authors = new ArrayList<>();
         Author author = new Author(name, surname);
         authorService.addAuthor(author);
-        authors.add(author);
-        book.setAuthors(authors);
-
+        book.addAuthor(author);
         bookService.addBook(book);
         return "redirect:/book/all";
     }

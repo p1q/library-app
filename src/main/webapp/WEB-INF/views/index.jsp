@@ -38,7 +38,7 @@
     <td style="text-align: center;" colspan="2">
       <!-- Find book by author button -->
       <form action = /book/search-author method = "GET">
-        <input type = "submit" value = "Find book by author"/>
+        <input type = "submit" value = "Find book by author's surname"/>
       </form>
     </td>
   </tr>

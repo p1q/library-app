@@ -3,6 +3,8 @@ package library.spring.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import library.spring.dao.BookDao;
 import library.spring.entity.Author;
 import library.spring.entity.Book;
@@ -51,14 +53,10 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Book> findByAuthor(String searchString) {
-        List<Author> foundAuthors = new ArrayList<>();
-        for (Author a : authorService.getAllAuthors()) {
-            String fullName = String.format("%s %s %s", a.getName(), a.getSurname(), a.getName());
-            if (fullName.contains(searchString)) {
-                foundAuthors.add(a);
-            }
-        }
-        return bookDao.findByAuthor(foundAuthors);
+    public List<Book> findByAuthorSurname(String surname) {
+        List<Author> foundAuthors = authorService.getAllAuthors().stream()
+                .filter(a -> a.getSurname().contains(surname))
+                .collect(Collectors.toList());
+        return bookDao.findByAuthorSurname(foundAuthors);
     }
 }

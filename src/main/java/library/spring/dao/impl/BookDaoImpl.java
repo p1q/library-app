@@ -60,7 +60,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findByAuthor(List<Author> authors) {
+    public List<Book> findByAuthorSurname(List<Author> authors) {
         List<Book> books = new ArrayList<>();
         authors.stream().map(this::getAllBooksByAuthor).forEach(books::addAll);
         return books;

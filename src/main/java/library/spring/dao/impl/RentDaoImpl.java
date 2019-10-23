@@ -58,9 +58,11 @@ public class RentDaoImpl implements RentDao {
 
     @Override
     public List<Book> getBooksRentByUser(User user) {
-        return getUserActiveRents(user).stream()
-                .map(Rent::getBook)
-                .collect(Collectors.toList());
+        TypedQuery query = sessionFactory.getCurrentSession().createQuery(
+                "FROM Book b WHERE b.bookId = ANY" +
+                        "(SELECT book.bookId FROM Rent WHERE user.userId = :userId)");
+        query.setParameter("userId", user.getUserId());
+        return query.getResultList();
     }
 
     @Override
