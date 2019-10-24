@@ -49,6 +49,10 @@ public class Book {
         this.authors = authors;
     }
 
+    public void addAuthor(Author author) {
+        this.authors.add(author);
+    }
+
     public Long getBookId() {
         return bookId;
     }
@@ -87,5 +91,11 @@ public class Book {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %d, %s, %d, %s,  Authors: %s",
+                bookId, title, year, price, authors);
     }
 }

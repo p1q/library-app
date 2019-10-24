@@ -173,9 +173,9 @@ public class MainApp {
         System.out.println("....................................");
 
         // returnBook Rent Test
-        rentService.returnBook(user2, book2);
-        rentService.returnBook(user3, book3);
-        rentService.returnBook(user4, book4);
+        rentService.returnBook(book2.getBookId());
+        rentService.returnBook(book3.getBookId());
+        rentService.returnBook(book4.getBookId());
 
         // Get Rents with returned book
         rents = rentService.getAllRents();

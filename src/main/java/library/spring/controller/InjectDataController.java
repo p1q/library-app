@@ -1,4 +1,4 @@
-package library.spring.util;
+package library.spring.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,17 @@ import library.spring.service.BookService;
 import library.spring.service.RentService;
 import library.spring.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-public class InjectDemoData {
-    public static void injectDemoData() {
+@Controller
+@RequestMapping("/inject")
+public class InjectDataController {
+
+    @GetMapping("/data")
+    public static String injectDemoData(Model model) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
@@ -77,8 +85,11 @@ public class InjectDemoData {
         rentService.rentBook(user4, book4);
         rentService.rentBook(user4, book5);
 
-        rentService.returnBook(user2, book2);
-        rentService.returnBook(user3, book3);
-        rentService.returnBook(user4, book4);
+        rentService.returnBook(book2.getBookId());
+        rentService.returnBook(book3.getBookId());
+        rentService.returnBook(book4.getBookId());
+
+        model.addAttribute("message", "Demo data injected successfully!");
+        return "forward:/";
     }
 }

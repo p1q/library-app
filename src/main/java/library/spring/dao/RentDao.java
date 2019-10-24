@@ -10,9 +10,11 @@ public interface RentDao {
 
     Rent getRent(User user, Book book);
 
+    List<Rent> getUserActiveRents(User user);
+
     List<Rent> getAllRents();
 
-    void returnBook(User user, Book book);
+    void returnBook(Long bookId);
 
     List<Book> getBooksRentByUser(User user);
 

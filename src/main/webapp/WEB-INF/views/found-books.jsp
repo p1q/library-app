@@ -3,12 +3,10 @@
 
 <html>
 <head>
-    <title>Show All Books</title>
+    <title>Found Books</title>
 </head>
 <body>
-
-<div><span style="color: #ff0000;"><strong>${errorMsg}</strong></span></div>
-<h3>ALL BOOKS LIST:</h3>
+<h3>FOUND BOOKS LIST:</h3>
 
 <table border="3">
 
@@ -21,7 +19,7 @@
         <th>BOOK INFO</th>
         <th>RENT BOOK</th>
     </tr>
-    <c:forEach var="book" items="${books}">
+    <c:forEach var="book" items="${foundBooks}">
         <tr>
             <td>
                 <c:out value="${book.bookId}" />
@@ -39,11 +37,11 @@
                 <c:out value="${book.price}" />
             </td>
             <td style="text-align: center;">
-                <a href="/book/${book.bookId}">
+                <a href="/book/info?bookId=${book.bookId}">
                     <span style="color: #0000ff;"><strong>INFO</strong></span></a>
             </td>
             <td style="text-align: center;">
-                <a href="/rent/rentbook?bookId=${book.bookId}">
+                <a href="/book/rent?bookId=${book.bookId}">
                     <span style="color: #0000ff;"><strong>RENT</strong></span></a>
             </td>
         </tr>

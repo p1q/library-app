@@ -3,12 +3,10 @@
 
 <html>
 <head>
-    <title>Show All Books</title>
+    <title>Show All Books Rented By User</title>
 </head>
 <body>
-
-<div><span style="color: #ff0000;"><strong>${errorMsg}</strong></span></div>
-<h3>ALL BOOKS LIST:</h3>
+<h3>ALL BOOKS YOU RENTED:</h3>
 
 <table border="3">
 
@@ -39,12 +37,12 @@
                 <c:out value="${book.price}" />
             </td>
             <td style="text-align: center;">
-                <a href="/book/${book.bookId}">
+                <a href="/book/info?bookId=${book.bookId}">
                     <span style="color: #0000ff;"><strong>INFO</strong></span></a>
             </td>
             <td style="text-align: center;">
-                <a href="/rent/rentbook?bookId=${book.bookId}">
-                    <span style="color: #0000ff;"><strong>RENT</strong></span></a>
+                <a href="/rent/returnbook?bookId=${rent.book.bookId}">
+                    <span style="color: #0000ff;"><strong>RETURN</strong></span></a>
             </td>
         </tr>
     </c:forEach>
@@ -54,8 +52,8 @@
 <br />
 <!-- Return to main page button -->
 <form action =/ method="GET">
-    <input type="submit" value="BACK TO HOME"/>
+<input type="submit" value="BACK TO HOME"/>
 </form>
 
 </body>
-</html>
+        </html>

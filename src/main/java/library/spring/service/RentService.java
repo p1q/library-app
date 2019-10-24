@@ -8,9 +8,11 @@ import library.spring.entity.User;
 public interface RentService {
     void rentBook(User user, Book book);
 
+    List<Rent> getUserActiveRents(Long userId);
+
     List<Rent> getAllRents();
 
-    void returnBook(User user, Book book);
+    void returnBook(Long bookId);
 
     List<Book> getBooksRentByUser(User user);
 

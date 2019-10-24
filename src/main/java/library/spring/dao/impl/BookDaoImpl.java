@@ -1,5 +1,6 @@
 package library.spring.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,7 +54,7 @@ public class BookDaoImpl implements BookDao {
     @Override
     public List<Book> findByTitle(String title) {
         TypedQuery<Book> query = sessionFactory.getCurrentSession()
-                .createQuery("FROM Book WHERE title LIKE :title", Book.class);
+                .createQuery("FROM Book WHERE title LIKE CONCAT('%', :title, '%')", Book.class);
         query.setParameter("title", title);
         return query.getResultList();
     }
