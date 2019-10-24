@@ -1,14 +1,10 @@
 package library.spring.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import library.spring.dao.BookDao;
 import library.spring.entity.Author;
 import library.spring.entity.Book;
-import library.spring.service.AuthorService;
 import library.spring.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookDao bookDao;
-    @Autowired
-    private AuthorService authorService;
 
     @Transactional
     @Override
@@ -49,14 +43,5 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findByTitle(String title) {
         return bookDao.findByTitle(title);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<Book> findByAuthorSurname(String surname) {
-        List<Author> foundAuthors = authorService.getAllAuthors().stream()
-                .filter(a -> a.getSurname().contains(surname))
-                .collect(Collectors.toList());
-        return bookDao.findByAuthorSurname(foundAuthors);
     }
 }

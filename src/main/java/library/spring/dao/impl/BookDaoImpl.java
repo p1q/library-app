@@ -58,11 +58,4 @@ public class BookDaoImpl implements BookDao {
         query.setParameter("title", title);
         return query.getResultList();
     }
-
-    @Override
-    public List<Book> findByAuthorSurname(List<Author> authors) {
-        List<Book> books = new ArrayList<>();
-        authors.stream().map(this::getAllBooksByAuthor).forEach(books::addAll);
-        return books;
-    }
 }

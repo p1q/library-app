@@ -57,22 +57,9 @@ public class BookController {
     }
 
     @PostMapping("/found")
-    public String findByTitle(@RequestParam(value = "searchString") String searchString,
+    public String findByTitle(@RequestParam(value = "surname") String surname,
                               Model model) {
-        List<Book> foundBooks = bookService.findByTitle(searchString);
-        model.addAttribute("foundBooks", foundBooks);
-        return "found-books";
-    }
-
-    @GetMapping("/search-author")
-    public String findByAuthor() {
-        return "search-author";
-    }
-
-    @PostMapping("/found-author")
-    public String foundByAuthor(@RequestParam(value = "searchString") String searchString,
-                                Model model) {
-        List<Book> foundBooks = bookService.findByAuthorSurname(searchString);
+        List<Book> foundBooks = bookService.findByTitle(surname);
         model.addAttribute("foundBooks", foundBooks);
         return "found-books";
     }

@@ -15,6 +15,4 @@ public interface BookService {
     List<Book> getAllBooksByAuthor(Author author);
 
     List<Book> findByTitle(String title);
-
-    List<Book> findByAuthorSurname(String searchString);
 }
