@@ -66,7 +66,8 @@ public class RentController {
             return "rented-users-books";
         } else {
             LOGGER.error("User not found.");
-            throw new UserNotFoundException("User not found.");
+            model.addAttribute("errorMsg", "Book not found!");
+            return "forward:/";
         }
     }
 }

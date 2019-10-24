@@ -15,7 +15,7 @@
 
         <tr>
             <td><b>Enter a title:</b></td>
-            <td><input type = "text" name = "searchString" size = "20"/></td>
+            <td><input type = "text" name = "title" size = "20"/></td>
         </tr>
 
         <tr>

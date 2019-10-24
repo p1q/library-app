@@ -57,9 +57,9 @@ public class BookController {
     }
 
     @PostMapping("/found")
-    public String findByTitle(@RequestParam(value = "surname") String surname,
+    public String findByTitle(@RequestParam(value = "title") String title,
                               Model model) {
-        List<Book> foundBooks = bookService.findByTitle(surname);
+        List<Book> foundBooks = bookService.findByTitle(title);
         model.addAttribute("foundBooks", foundBooks);
         return "found-books";
     }
