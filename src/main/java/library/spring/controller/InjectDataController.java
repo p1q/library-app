@@ -40,9 +40,12 @@ public class InjectDataController {
         // Add Admin, User and Roles - ADMIN and USER
         Role adminRole = new Role("ADMIN");
         Role userRole = new Role("USER");
-        User admin = new User("Admin", "Admin", "admin@mail.com", "admin", "1");
-        User user = new User("User", "User", "user@mail.com", "user", "1");
+        User admin = new User("Admin", "Admin", "admin@mail.com", "admin",
+                "$2a$10$5yc7SlKRMMdrqTdRC/1Aye5PPfuOvb3ABDEnwXYBLePIharhScsGW");
+        User user = new User("User", "User", "user@mail.com", "user",
+                "$2a$10$5yc7SlKRMMdrqTdRC/1Aye5PPfuOvb3ABDEnwXYBLePIharhScsGW");
         admin.addRole(adminRole);
+        admin.addRole(userRole);
         user.addRole(userRole);
         sessionFactory.getCurrentSession().save(admin);
         sessionFactory.getCurrentSession().save(user);

@@ -1,6 +1,6 @@
 package library.spring.config;
 
-import library.spring.security.CustomUserDetailsService;
+import library.spring.security.UserDetailsServiceImpl;
 import library.spring.security.PrintInfoSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
+        return new UserDetailsServiceImpl();
     }
 
     @Bean

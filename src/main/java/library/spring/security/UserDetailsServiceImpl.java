@@ -1,19 +1,21 @@
 package library.spring.security;
 
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import library.spring.dao.UserDao;
 import library.spring.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User.UserBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserDao userDao;
 
@@ -22,15 +24,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userDao.getUserByLogin(login).orElseThrow(()
                 -> new UsernameNotFoundException("Login '" + login + "' not found."));
 
-        UserBuilder builder;
-        if (user != null) {
-            builder = org.springframework.security.core.userdetails.User.withUsername(login);
-            builder.password(new BCryptPasswordEncoder().encode(user.getPassword()));
-            builder.roles(user.getRoles().toString());
-        } else {
-            throw new UsernameNotFoundException("User not found.");
-        }
+        Set<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toSet());
 
-        return builder.build();
+        return new org.springframework.security.core.userdetails
+                .User(user.getLogin(), user.getPassword(), grantedAuthorities);
     }
 }
