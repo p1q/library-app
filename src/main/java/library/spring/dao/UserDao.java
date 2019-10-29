@@ -9,5 +9,13 @@ public interface UserDao {
 
     Optional<User> getUser(Long userId);
 
+    Optional<User> getUserByLogin(String login);
+
     List<User> getAllUsers();
+
+    void updateUser(User user);
+
+    Boolean isEmailExists(String email);
+
+    Boolean isLoginExists(String login);
 }

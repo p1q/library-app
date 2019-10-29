@@ -2,41 +2,78 @@ package library.spring.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import library.spring.config.AppConfig;
+import library.spring.dao.RentDao;
 import library.spring.entity.Author;
 import library.spring.entity.Book;
+import library.spring.entity.Role;
 import library.spring.entity.User;
 import library.spring.service.AuthorService;
 import library.spring.service.BookService;
-import library.spring.service.RentService;
-import library.spring.service.UserService;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/inject")
+@Transactional
+@EnableTransactionManagement
 public class InjectDataController {
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    private RentDao rentDao;
 
     @GetMapping("/data")
-    public static String injectDemoData(Model model) {
+    public String injectDemoData(Model model) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
+        // Add Admin, User and Roles - ADMIN and USER
+        Role adminRole = new Role("ADMIN");
+        Role userRole = new Role("USER");
+        User admin = new User("Admin", "Admin", "admin@mail.com", "admin", "1");
+        User user = new User("User", "User", "user@mail.com", "user", "1");
+        admin.addRole(adminRole);
+        user.addRole(userRole);
+        sessionFactory.getCurrentSession().save(admin);
+        sessionFactory.getCurrentSession().save(user);
+
         // Add Users
-        User user1 = new User("Sunil", "Bora", "suni.bora@example.com");
-        User user2 = new User("David", "Miller", "david.miller@example.com");
-        User user3 = new User("Sameer", "Singh", "sameer.singh@example.com");
-        User user4 = new User("Paul", "Smith", "paul.smith@example.com");
-        User user5 = new User("Victor", "Karah", "victor.karah@gmail.com");
-        UserService userService = context.getBean(UserService.class);
-        userService.addUser(user1);
-        userService.addUser(user2);
-        userService.addUser(user3);
-        userService.addUser(user4);
-        userService.addUser(user5);
+        User user1 = new User("Sunil", "Bora", "suni.bora@example.com", "sunil", "1");
+        User user2 = new User("David", "Miller", "david.miller@example.com", "david", "1");
+        User user3 = new User("Sameer", "Singh", "sameer.singh@example.com", "sameer", "1");
+        User user4 = new User("Paul", "Smith", "paul.smith@example.com", "paul", "1");
+        User user5 = new User("Victor", "Karah", "victor.karah@gmail.com", "victor", "1");
+        sessionFactory.getCurrentSession().save(user1);
+        sessionFactory.getCurrentSession().save(user2);
+        sessionFactory.getCurrentSession().save(user3);
+        sessionFactory.getCurrentSession().save(user4);
+        sessionFactory.getCurrentSession().save(user5);
+
+        String queryString = "INSERT INTO users_roles (user_id, role_id) VALUES (3, 2);";
+        Query query = sessionFactory.getCurrentSession().createNativeQuery(queryString);
+        query.executeUpdate();
+        queryString = "INSERT INTO users_roles (user_id, role_id) VALUES (4, 2);";
+        query = sessionFactory.getCurrentSession().createNativeQuery(queryString);
+        query.executeUpdate();
+        queryString = "INSERT INTO users_roles (user_id, role_id) VALUES (5, 2);";
+        query = sessionFactory.getCurrentSession().createNativeQuery(queryString);
+        query.executeUpdate();
+        queryString = "INSERT INTO users_roles (user_id, role_id) VALUES (6, 2);";
+        query = sessionFactory.getCurrentSession().createNativeQuery(queryString);
+        query.executeUpdate();
+        queryString = "INSERT INTO users_roles (user_id, role_id) VALUES (7, 2);";
+        query = sessionFactory.getCurrentSession().createNativeQuery(queryString);
+        query.executeUpdate();
 
         // Add Authors
         Author author1 = new Author("Herbert", "Schildt");
@@ -78,16 +115,16 @@ public class InjectDataController {
         bookService.addBook(book5);
 
         // Add Rents
-        RentService rentService = context.getBean(RentService.class);
-        rentService.rentBook(user1, book1);
-        rentService.rentBook(user2, book2);
-        rentService.rentBook(user3, book3);
-        rentService.rentBook(user4, book4);
-        rentService.rentBook(user4, book5);
+        rentDao.rentBook(user1, book1);
+        rentDao.rentBook(user2, book2);
+        rentDao.rentBook(user3, book3);
+        rentDao.rentBook(user4, book4);
+        rentDao.rentBook(user4, book5);
 
-        rentService.returnBook(book2.getBookId());
-        rentService.returnBook(book3.getBookId());
-        rentService.returnBook(book4.getBookId());
+        // Return books
+        rentDao.returnBook(book2.getBookId());
+        rentDao.returnBook(book3.getBookId());
+        rentDao.returnBook(book4.getBookId());
 
         model.addAttribute("message", "Demo data injected successfully!");
         return "forward:/";

@@ -1,6 +1,5 @@
 package library.spring.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ public class BookDaoImpl implements BookDao {
         TypedQuery<Book> query = sessionFactory.getCurrentSession()
                 .createQuery("FROM Book WHERE bookId = :bookId", Book.class);
         query.setParameter("bookId", bookId);
-        return Optional.of(query.getSingleResult());
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
@@ -57,5 +56,12 @@ public class BookDaoImpl implements BookDao {
                 .createQuery("FROM Book WHERE title LIKE CONCAT('%', :title, '%')", Book.class);
         query.setParameter("title", title);
         return query.getResultList();
+    }
+
+    @Override
+    public void deleteBook(Long bookId) {
+        Book book = new Book();
+        book.setBookId(bookId);
+        sessionFactory.getCurrentSession().delete(book);
     }
 }
