@@ -26,10 +26,8 @@ public class RoleDaoImpl implements RoleDao {
 
     @Override
     public Optional<Role> getRole(Long roleId) {
-        TypedQuery<Role> query = sessionFactory.getCurrentSession()
-                .createQuery("FROM Role WHERE roleId = :roleId", Role.class);
-        query.setParameter("roleId", roleId);
-        return Optional.ofNullable(query.getSingleResult());
+        Role role = sessionFactory.getCurrentSession().get(Role.class, roleId);
+        return Optional.ofNullable(role);
     }
 
     @Override
