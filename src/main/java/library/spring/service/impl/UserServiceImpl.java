@@ -29,10 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void addUser(UserDto userDto) {
-        User user = new User(userDto.getName(), userDto.getSurname(),
-                userDto.getEmail(), userDto.getLogin(), userDto.getPassword());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+    public void addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleDao.getRoleByName(ROLE_USER).orElseThrow(()
                 -> new NoSuchElementException("The role wasn't found."));
         user.addRole(role);

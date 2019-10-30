@@ -17,9 +17,6 @@ public class PrintInfoSuccessHandler implements AuthenticationSuccessHandler {
         String username = authentication.getName();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        for (GrantedAuthority authority : authorities) {
-            System.out.println(authority);
-        }
         request.setAttribute("username", username);
         request.setAttribute("authorities", authorities);
         request.getRequestDispatcher("/WEB-INF/views/logged.jsp").forward(request, response);
