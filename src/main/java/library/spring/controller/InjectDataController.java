@@ -3,14 +3,14 @@ package library.spring.controller;
 import java.util.ArrayList;
 import java.util.List;
 import library.spring.config.AppConfig;
-import library.spring.dao.RentDao;
-import library.spring.dao.UserDao;
 import library.spring.entity.Author;
 import library.spring.entity.Book;
 import library.spring.entity.Role;
 import library.spring.entity.User;
 import library.spring.service.AuthorService;
 import library.spring.service.BookService;
+import library.spring.service.RentService;
+import library.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @EnableTransactionManagement
 public class InjectDataController {
     @Autowired
-    private RentDao rentDao;
+    private RentService rentService;
 
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
 
     @GetMapping("/data")
     public String injectDemoData(Model model) {
@@ -46,8 +46,8 @@ public class InjectDataController {
         admin.addRole(adminRole);
         admin.addRole(userRole);
         user.addRole(userRole);
-        userDao.addUser(admin);
-        userDao.addUser(user);
+        userService.addUser(admin);
+        userService.addUser(user);
 
         // Add Users
         User user1 = new User("Sunil", "Bora", "suni.bora@example.com", "sunil", "1");
@@ -60,11 +60,11 @@ public class InjectDataController {
         user3.addRole(userRole);
         user4.addRole(userRole);
         user5.addRole(userRole);
-        userDao.addUser(user1);
-        userDao.addUser(user2);
-        userDao.addUser(user3);
-        userDao.addUser(user4);
-        userDao.addUser(user5);
+        userService.addUser(user1);
+        userService.addUser(user2);
+        userService.addUser(user3);
+        userService.addUser(user4);
+        userService.addUser(user5);
 
         // Add Authors
         Author author1 = new Author("Herbert", "Schildt");
@@ -106,16 +106,16 @@ public class InjectDataController {
         bookService.addBook(book5);
 
         // Add Rents
-        rentDao.rentBook(user1, book1);
-        rentDao.rentBook(user2, book2);
-        rentDao.rentBook(user3, book3);
-        rentDao.rentBook(user4, book4);
-        rentDao.rentBook(user4, book5);
+        rentService.rentBook(user1, book1);
+        rentService.rentBook(user2, book2);
+        rentService.rentBook(user3, book3);
+        rentService.rentBook(user4, book4);
+        rentService.rentBook(user4, book5);
 
         // Return books
-        rentDao.returnBook(book2.getBookId());
-        rentDao.returnBook(book3.getBookId());
-        rentDao.returnBook(book4.getBookId());
+        rentService.returnBook(book2.getBookId());
+        rentService.returnBook(book3.getBookId());
+        rentService.returnBook(book4.getBookId());
 
         model.addAttribute("message", "Demo data injected successfully!");
         return "forward:/";
