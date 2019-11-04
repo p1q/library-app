@@ -1,5 +1,6 @@
 package library.spring.controller;
 
+import java.security.Principal;
 import java.util.Optional;
 import library.spring.entity.Book;
 import library.spring.entity.User;
@@ -8,6 +9,7 @@ import library.spring.service.RentService;
 import library.spring.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/rent")
 public class RentController {
-    private static final Long USER_ID = 1L;
     private static final Logger LOGGER = Logger.getLogger(RentController.class);
 
     @Autowired
@@ -28,8 +29,8 @@ public class RentController {
     private UserService userService;
 
     @GetMapping("/rentbook")
-    public String rentBook(@RequestParam("bookId") Long bookId) {
-        Optional<User> user = userService.getUser(USER_ID);
+    public String rentBook(@RequestParam("bookId") Long bookId, Principal principal) {
+        Optional<User> user = userService.getUserByLogin(principal.getName());
         Optional<Book> book = bookService.getBook(bookId);
         try {
             rentService.rentBook(user.get(), book.get());
@@ -46,8 +47,10 @@ public class RentController {
     }
 
     @GetMapping("/user-rents")
-    public String getUserRents(ModelMap model) {
-        model.put("rents", rentService.getUserActiveRents(USER_ID));
+    public String getUserRents(ModelMap model, Principal principal) {
+        User user = userService.getUserByLogin(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found."));
+        model.put("rents", rentService.getUserActiveRents(user.getUserId()));
         return "user-rents";
     }
 
@@ -58,8 +61,8 @@ public class RentController {
     }
 
     @GetMapping("/rented-users-books")
-    public String getBooksRentByUser(ModelMap model) {
-        Optional<User> user = userService.getUser(USER_ID);
+    public String getBooksRentByUser(ModelMap model, Principal principal) {
+        Optional<User> user = userService.getUserByLogin(principal.getName());
         if (user.isPresent()) {
             model.put("books", rentService.getBooksRentByUser(user.get()));
             return "rented-users-books";

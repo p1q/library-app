@@ -20,14 +20,14 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public void deleteRole(Role role) {
-        sessionFactory.getCurrentSession().delete(role);
-    }
-
-    @Override
     public Optional<Role> getRole(Long roleId) {
         Role role = sessionFactory.getCurrentSession().get(Role.class, roleId);
         return Optional.ofNullable(role);
+    }
+
+    @Override
+    public void deleteRole(Role role) {
+        sessionFactory.getCurrentSession().delete(role);
     }
 
     @Override

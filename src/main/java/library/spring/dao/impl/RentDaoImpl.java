@@ -1,6 +1,7 @@
 package library.spring.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import library.spring.dao.RentDao;
@@ -22,12 +23,17 @@ public class RentDaoImpl implements RentDao {
     }
 
     @Override
-    public Rent getRent(User user, Book book) {
+    public Optional<Rent> getRent(User user, Book book) {
         TypedQuery<Rent> query = sessionFactory.getCurrentSession()
                 .createQuery("FROM Rent WHERE user = :user AND book = :book", Rent.class);
         query.setParameter("user", user);
         query.setParameter("book", book);
-        return query.getSingleResult();
+        return Optional.ofNullable(query.getSingleResult());
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        sessionFactory.getCurrentSession().delete(user);
     }
 
     @Override

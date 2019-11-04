@@ -2,7 +2,7 @@ package library.spring.security;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import library.spring.annotation.LoginExists;
+import library.spring.validator.LoginExists;
 import library.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -2,10 +2,10 @@ package library.spring.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import library.spring.annotation.EmailExists;
-import library.spring.annotation.LoginExists;
-import library.spring.annotation.PasswordMatches;
-import library.spring.annotation.ValidEmail;
+import library.spring.validator.EmailExists;
+import library.spring.validator.LoginExists;
+import library.spring.validator.PasswordMatches;
+import library.spring.validator.ValidEmail;
 
 @PasswordMatches
 public class UserDto {
