@@ -68,8 +68,16 @@
   </tr>
   <tr style="height: 18px;">
     <td style="text-align: center;" colspan="2">
+      <!-- Register button -->
+      <form action = /register method = "GET">
+        <input type = "submit" value = "Register"/>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center;" colspan="2">
       <!-- Login button -->
-      <form action = login method = "GET">
+      <form action = /login method = "GET">
         <input type = "submit" value = "Login"/>
       </form>
     </td>
@@ -77,7 +85,7 @@
   <tr>
     <td style="text-align: center;" colspan="2">
       <!-- Logout button -->
-      <form action = logout method = "GET">
+      <form action = /logout method = "GET">
         <input type = "submit" value = "Logout"/>
       </form>
     </td>

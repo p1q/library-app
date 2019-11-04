@@ -10,4 +10,12 @@ public interface UserService {
     Optional<User> getUser(Long userId);
 
     List<User> getAllUsers();
+
+    void updateUser(User user);
+
+    Optional<User> getUserByLogin(String login);
+
+    Boolean isEmailExists(String email);
+
+    Boolean isLoginExists(String login);
 }

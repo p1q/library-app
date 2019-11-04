@@ -24,7 +24,15 @@ public class UserDaoImpl implements UserDao {
         TypedQuery<User> query = sessionFactory.getCurrentSession()
                 .createQuery("FROM User WHERE userId = :userId", User.class);
         query.setParameter("userId", userId);
-        return Optional.of(query.getSingleResult());
+        return Optional.ofNullable(query.getSingleResult());
+    }
+
+    @Override
+    public Optional<User> getUserByLogin(String login) {
+        TypedQuery<User> query = sessionFactory.getCurrentSession()
+                .createQuery("FROM User WHERE login = :login", User.class);
+        query.setParameter("login", login);
+        return Optional.ofNullable(query.getSingleResult());
     }
 
     @Override
@@ -32,5 +40,26 @@ public class UserDaoImpl implements UserDao {
         TypedQuery<User> query = sessionFactory.getCurrentSession()
                 .createQuery("FROM User", User.class);
         return query.getResultList();
+    }
+
+    @Override
+    public void updateUser(User user) {
+        sessionFactory.getCurrentSession().update(user);
+    }
+
+    @Override
+    public Boolean isEmailExists(String email) {
+        TypedQuery query = sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(u) FROM User u WHERE email = :email");
+        query.setParameter("email", email);
+        return (Long)(query.getSingleResult()) != 0;
+    }
+
+    @Override
+    public Boolean isLoginExists(String login) {
+        TypedQuery query = sessionFactory.getCurrentSession()
+                .createQuery("SELECT COUNT(u) FROM User u WHERE login = :login");
+        query.setParameter("login", login);
+        return (Long)(query.getSingleResult()) != 0;
     }
 }

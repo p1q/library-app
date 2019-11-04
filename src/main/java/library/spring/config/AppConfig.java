@@ -19,7 +19,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScans(value = {
         @ComponentScan("library.spring.dao"),
-        @ComponentScan("library.spring.service")})
+        @ComponentScan("library.spring.security"),
+        @ComponentScan("library.spring.service"),
+        @ComponentScan("library.spring.controller")})
 public class AppConfig {
     @Autowired
     private Environment env;

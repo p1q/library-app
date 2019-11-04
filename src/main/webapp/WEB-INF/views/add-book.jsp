@@ -39,6 +39,9 @@
             <td></td>
             <td>
                 <button type="submit">Add book</button><br>
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
             </td>
         </tr>
 

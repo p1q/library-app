@@ -5,33 +5,61 @@ import java.util.List;
 import library.spring.config.AppConfig;
 import library.spring.entity.Author;
 import library.spring.entity.Book;
+import library.spring.entity.Role;
 import library.spring.entity.User;
 import library.spring.service.AuthorService;
 import library.spring.service.BookService;
 import library.spring.service.RentService;
 import library.spring.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/inject")
+@Transactional
+@EnableTransactionManagement
 public class InjectDataController {
+    @Autowired
+    private RentService rentService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/data")
-    public static String injectDemoData(Model model) {
+    public String injectDemoData(Model model) {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
 
+        // Add Admin, User and Roles - ADMIN and USER
+        Role adminRole = new Role("ADMIN");
+        Role userRole = new Role("USER");
+        User admin = new User("Admin", "Admin", "admin@mail.com", "admin",
+                "$2a$10$5yc7SlKRMMdrqTdRC/1Aye5PPfuOvb3ABDEnwXYBLePIharhScsGW");
+        User user = new User("User", "User", "user@mail.com", "user",
+                "$2a$10$5yc7SlKRMMdrqTdRC/1Aye5PPfuOvb3ABDEnwXYBLePIharhScsGW");
+        admin.addRole(adminRole);
+        admin.addRole(userRole);
+        user.addRole(userRole);
+        userService.addUser(admin);
+        userService.addUser(user);
+
         // Add Users
-        User user1 = new User("Sunil", "Bora", "suni.bora@example.com");
-        User user2 = new User("David", "Miller", "david.miller@example.com");
-        User user3 = new User("Sameer", "Singh", "sameer.singh@example.com");
-        User user4 = new User("Paul", "Smith", "paul.smith@example.com");
-        User user5 = new User("Victor", "Karah", "victor.karah@gmail.com");
-        UserService userService = context.getBean(UserService.class);
+        User user1 = new User("Sunil", "Bora", "suni.bora@example.com", "sunil", "1");
+        User user2 = new User("David", "Miller", "david.miller@example.com", "david", "1");
+        User user3 = new User("Sameer", "Singh", "sameer.singh@example.com", "sameer", "1");
+        User user4 = new User("Paul", "Smith", "paul.smith@example.com", "paul", "1");
+        User user5 = new User("Victor", "Karah", "victor.karah@gmail.com", "victor", "1");
+        user1.addRole(userRole);
+        user2.addRole(userRole);
+        user3.addRole(userRole);
+        user4.addRole(userRole);
+        user5.addRole(userRole);
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(user3);
@@ -78,13 +106,13 @@ public class InjectDataController {
         bookService.addBook(book5);
 
         // Add Rents
-        RentService rentService = context.getBean(RentService.class);
         rentService.rentBook(user1, book1);
         rentService.rentBook(user2, book2);
         rentService.rentBook(user3, book3);
         rentService.rentBook(user4, book4);
         rentService.rentBook(user4, book5);
 
+        // Return books
         rentService.returnBook(book2.getBookId());
         rentService.returnBook(book3.getBookId());
         rentService.returnBook(book4.getBookId());

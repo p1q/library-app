@@ -1,7 +1,6 @@
 package library.spring.dao.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import library.spring.dao.RentDao;

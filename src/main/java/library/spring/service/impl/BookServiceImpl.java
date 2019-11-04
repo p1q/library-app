@@ -44,4 +44,10 @@ public class BookServiceImpl implements BookService {
     public List<Book> findByTitle(String title) {
         return bookDao.findByTitle(title);
     }
+
+    @Transactional
+    @Override
+    public void deleteBook(Long bookId) {
+        bookDao.deleteBook(bookId);
+    }
 }

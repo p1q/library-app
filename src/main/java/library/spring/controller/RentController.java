@@ -3,7 +3,6 @@ package library.spring.controller;
 import java.util.Optional;
 import library.spring.entity.Book;
 import library.spring.entity.User;
-import library.spring.exceptions.UserNotFoundException;
 import library.spring.service.BookService;
 import library.spring.service.RentService;
 import library.spring.service.UserService;

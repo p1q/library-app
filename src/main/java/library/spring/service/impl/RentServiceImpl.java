@@ -7,7 +7,6 @@ import library.spring.entity.Book;
 import library.spring.entity.Rent;
 import library.spring.entity.User;
 import library.spring.exceptions.UserNotFoundException;
-import library.spring.service.BookService;
 import library.spring.service.RentService;
 import library.spring.service.UserService;
 import org.apache.log4j.Logger;
@@ -23,8 +22,6 @@ public class RentServiceImpl implements RentService {
     private RentDao rentDao;
     @Autowired
     private UserService userService;
-    @Autowired
-    private BookService bookService;
 
     @Transactional
     @Override

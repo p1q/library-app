@@ -38,8 +38,8 @@ public class AuthorDaoImpl implements AuthorDao {
         TypedQuery<Author> query = sessionFactory.getCurrentSession()
                 .createQuery("FROM Author WHERE name LIKE :name AND surname LIKE :surname",
                         Author.class);
-        query.setParameter("name", name);
-        query.setParameter("surname", surname);
+        query.setParameter("name","%" + name + "%");
+        query.setParameter("surname", "%" + surname + "%");
         return query.getResultList();
     }
 }
