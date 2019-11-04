@@ -19,7 +19,7 @@
 1. Install JDK latest version and set correct JAVA_HOME variable
 2. Install Git (distributed version control system)
 3. Install an IDE
-4. Install and configure Apache Tomcat (I'm using version 8)
+4. Install and configure Apache Tomcat (I use version 8)
 5. Install and configure MySQL database
 6. Clone project from GitHub into your IDE as a maven project.
 7. That's all! You can run it.
