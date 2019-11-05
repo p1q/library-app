@@ -1,6 +1,7 @@
 package library.spring.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.TypedQuery;
 import library.spring.dao.AuthorDao;
 import library.spring.entity.Author;
@@ -16,6 +17,17 @@ public class AuthorDaoImpl implements AuthorDao {
     @Override
     public void addAuthor(Author author) {
         sessionFactory.getCurrentSession().save(author);
+    }
+
+    @Override
+    public Optional<Author> getAuthor(Long authorId) {
+        Author author = sessionFactory.getCurrentSession().get(Author.class, authorId);
+        return Optional.ofNullable(author);
+    }
+
+    @Override
+    public void deleteAuthor(Author author) {
+        sessionFactory.getCurrentSession().delete(author);
     }
 
     @Override

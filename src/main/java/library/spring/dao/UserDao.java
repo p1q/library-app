@@ -15,6 +15,8 @@ public interface UserDao {
 
     void updateUser(User user);
 
+    void deleteUser(User user);
+
     Boolean isEmailExists(String email);
 
     Boolean isLoginExists(String login);

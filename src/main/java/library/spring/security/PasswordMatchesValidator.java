@@ -2,8 +2,8 @@ package library.spring.security;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import library.spring.annotation.PasswordMatches;
 import library.spring.dto.UserDto;
+import library.spring.validator.PasswordMatches;
 
 public class PasswordMatchesValidator
         implements ConstraintValidator<PasswordMatches, Object> {

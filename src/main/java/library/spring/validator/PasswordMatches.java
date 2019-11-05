@@ -1,4 +1,4 @@
-package library.spring.annotation;
+package library.spring.validator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

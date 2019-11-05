@@ -2,8 +2,8 @@ package library.spring.security;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import library.spring.annotation.EmailExists;
 import library.spring.service.UserService;
+import library.spring.validator.EmailExists;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class EmailExistsValidator implements ConstraintValidator<EmailExists, String> {
